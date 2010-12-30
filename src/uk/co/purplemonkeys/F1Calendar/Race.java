@@ -20,4 +20,9 @@ public class Race
 	{
 		return race_date.getTime();
 	}
+	
+	public Date getDate()
+	{
+		return race_date;
+	}
 }

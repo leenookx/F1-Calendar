@@ -37,6 +37,19 @@ public class RaceCalendar
 	 */
 	public static Race getNextRace(Date now)
 	{
-		return null;
+		boolean found = false;
+		Race result = null;
+		int index = 0;
+		while (index < races.size() && !found)
+		{
+			Race r = races.get( index );
+			if (r.getInterval() > now.getTime())
+			{
+				found = true;
+				result = r;
+			}
+		}
+		
+		return result;
 	}
 }

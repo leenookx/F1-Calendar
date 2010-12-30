@@ -13,6 +13,7 @@ import android.content.SharedPreferences;
 import android.os.IBinder;
 import android.os.SystemClock;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 public class F1CalendarService extends Service implements SharedPreferences.OnSharedPreferenceChangeListener
 {
@@ -31,6 +32,7 @@ public class F1CalendarService extends Service implements SharedPreferences.OnSh
     private static final String VOLUME_SOURCE_KEY = "CTW_VOLUME_SOURCE";
     
     private SharedPreferences m_preferences;
+    private Race m_current_race = null;
 	
     @Override
     public void onCreate() 
@@ -40,6 +42,8 @@ public class F1CalendarService extends Service implements SharedPreferences.OnSh
         
         // Initialise the race calendar information
         RaceCalendar.Initialise();
+        
+        scheduleAlarmEvent();
     }
 
     @Override
@@ -64,6 +68,11 @@ public class F1CalendarService extends Service implements SharedPreferences.OnSh
         Race race = RaceCalendar.getNextRace( c.getTime() );
         if (race != null)
         {
+        	if (race != m_current_race)
+        	{
+        		Log.d("F1CalendarService", "New race detected!");
+        	}
+        	
         	AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         	
         	long when = race.getInterval();
@@ -75,6 +84,8 @@ public class F1CalendarService extends Service implements SharedPreferences.OnSh
 	            PendingIntent pendingIntent = PendingIntent.getService(this, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
 	
 	            manager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, when, pendingIntent);
+	            
+	            Log.d("F1CalendarService", "Alarm set.");
         	}
         }
         else
@@ -86,6 +97,8 @@ public class F1CalendarService extends Service implements SharedPreferences.OnSh
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) 
     {
+    	Log.d("F1CalendarService", intent.getAction());
+    	
     	return START_STICKY;
     }
 }

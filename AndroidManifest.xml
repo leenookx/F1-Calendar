@@ -25,13 +25,13 @@
                         android:resource="@xml/f1calendar_widget_provider" />
         </receiver>
         
-        <service android:name="CountdownTimerService">
+        <service android:name="F1CalendarService">
             <intent-filter>
-                <action android:name="uk.co.purplemonkeys.F1Calendar.intent.ACTION_NEW_TIMER"/>
-                <action android:name="uk.co.purplemonkeys.F1Calendar.intent.ACTION_CANCEL_TIMER"/>
-                <action android:name="uk.co.purplemonkeys.F1Calendar.intent.ACTION_ALARM_ALERT"/>
-                <action android:name="uk.co.purplemonkeys.F1Calendar.intent.ACTION_ADD_WIDGET"/>
-                <action android:name="uk.co.purplemonkeys.F1Calendar.intent.ACTION_REMOVE_WIDGET"/>
+                <action android:name="uk.co.purplemonkeys.F1CalendarService.intent.ACTION_NEW_TIMER"/>
+                <action android:name="uk.co.purplemonkeys.F1CalendarService.intent.ACTION_CANCEL_TIMER"/>
+                <action android:name="uk.co.purplemonkeys.F1CalendarService.intent.ACTION_ALARM_ALERT"/>
+                <action android:name="uk.co.purplemonkeys.F1CalendarService.intent.ACTION_ADD_WIDGET"/>
+                <action android:name="uk.co.purplemonkeys.F1CalendarService.intent.ACTION_REMOVE_WIDGET"/>
             </intent-filter>
         </service>
     </application>
@@ -39,4 +39,5 @@
     <uses-sdk android:minSdkVersion="7" android:targetSdkVersion="9"></uses-sdk>
     
     <uses-permission android:name="android.permission.VIBRATE"/>
+
 </manifest> 
