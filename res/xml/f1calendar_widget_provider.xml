@@ -4,4 +4,5 @@
      android:minHeight="50dip"
      android:updatePeriodMillis="10000"
      android:initialLayout="@layout/main"
+     android:configure="uk.co.purplemonkeys.F1Calendar.WidgetConfiguration"
 />
