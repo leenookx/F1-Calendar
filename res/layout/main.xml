@@ -1,14 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-      android:orientation="vertical"
-      android:layout_width="fill_parent"
-      android:layout_height="fill_parent"
-      >
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/widget"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:focusable="true"
+    style="@style/WidgetBackground">
+    
     <TextView
-          android:id="@+id/xmas"
-          android:layout_width="fill_parent" 
-          android:layout_height="wrap_content" 
-          android:text="@string/hello"
-          android:paddingTop="35dip" android:paddingLeft="29dip" android:textColor="#000000"
-          />
-</LinearLayout>
+        android:id="@+id/word_title"
+        android:layout_width="wrap_content" 
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dip"
+        android:layout_marginBottom="1dip"
+        android:includeFontPadding="false"
+        android:singleLine="true"
+        android:ellipsize="end"
+        style="@style/Text.WordTitle" />
+    
+    <TextView  
+        android:id="@+id/bullet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/word_title"
+        android:paddingRight="4dip"
+        android:includeFontPadding="false"
+        android:singleLine="true"
+        style="@style/BulletPoint" />
+    
+    <TextView  
+        android:id="@+id/definition"
+        android:layout_width="fill_parent" 
+        android:layout_height="wrap_content"
+        android:layout_below="@id/word_title"
+        android:layout_toRightOf="@id/bullet"
+        android:paddingRight="5dip"
+        android:paddingBottom="4dip"
+        android:includeFontPadding="false"
+        android:lineSpacingMultiplier="0.9"
+        android:maxLines="4"
+        android:fadingEdge="vertical"
+        style="@style/Text.Definition" />
+    
+</RelativeLayout>

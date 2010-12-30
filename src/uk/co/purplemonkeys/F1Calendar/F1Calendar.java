@@ -3,20 +3,17 @@ package uk.co.purplemonkeys.F1Calendar;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.Timer;
 import java.util.TimerTask;
 
+import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.util.Log;
 import android.widget.RemoteViews;
-
-//Need the following import to get access to the app resources, since this
-//class is in a sub-package.
-import uk.co.purplemonkeys.F1Calendar.R;
 
 public class F1Calendar extends AppWidgetProvider
 {
@@ -26,9 +23,24 @@ public class F1Calendar extends AppWidgetProvider
 	@Override
 	public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) 
 	{
-		Log.d(TAG, "onUpdate");
-		Timer timer = new Timer();
-		timer.scheduleAtFixedRate(new MyTime(context, appWidgetManager), 1, 60000);
+        final int N = appWidgetIds.length;
+
+        // Perform this loop procedure for each App Widget that belongs to this provider
+        for (int i = 0; i < N; i++)
+        {
+            int appWidgetId = appWidgetIds[i];
+
+            // Create an Intent to launch ExampleActivity
+            Intent intent = new Intent(context, F1Calendar.class);
+            PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
+
+            // Get the layout for the App Widget and attach an on-click listener to the button
+            RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.main);
+            views.setOnClickPendingIntent(R.id.widget, pendingIntent);
+
+            // Tell the AppWidgetManager to perform an update on the current App Widget
+            appWidgetManager.updateAppWidget(appWidgetId, views);
+        }
 	}
 	
     @Override
@@ -44,7 +56,7 @@ public class F1Calendar extends AppWidgetProvider
                 new ComponentName("uk.co.purplemonkeys.F1Calendar", "BroadcastEventReceiver"),
                 					PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
                 					PackageManager.DONT_KILL_APP);
-        super.onEnabled(context);
+        super.onEnabled( context );
     }
     
     @Override
@@ -55,9 +67,10 @@ public class F1Calendar extends AppWidgetProvider
         Log.d(TAG, "onDisabled");
         PackageManager pm = context.getPackageManager();
         pm.setComponentEnabledSetting(
-                new ComponentName("uk.co.purplemonkeys", ".F1Calendar.BroadcastEventReceiver"),
-                					PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+                new ComponentName("uk.co.purplemonkeys.F1Calendar", "BroadcastEventReceiver"),
+                					PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
                 					PackageManager.DONT_KILL_APP);
+        super.onDisabled( context );
     }
 	
 	private class MyTime extends TimerTask 
@@ -79,7 +92,7 @@ public class F1Calendar extends AppWidgetProvider
 			Date date1 = new Date();
 			Calendar calendar = new GregorianCalendar(2010, 11,25);
 			long days = (((calendar.getTimeInMillis()- date1.getTime())/1000))/86400;
-			remoteViews.setTextViewText(R.id.xmas, "" + days);
+			remoteViews.setTextViewText(R.id.widget, "" + days);
 			appWidgetManager.updateAppWidget(thisWidget, remoteViews);
 		}
 	}
