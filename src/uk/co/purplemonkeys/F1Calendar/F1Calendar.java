@@ -55,9 +55,6 @@ public class F1Calendar extends AppWidgetProvider
                 					PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
                 					PackageManager.DONT_KILL_APP);
         
-        // Initialise the race calendar information
-        RaceCalendar.Initialise();
-        
         Intent intent = new Intent(context, F1CalendarService.class);
         intent.setAction(F1CalendarService.INTENT_RESET_ALARMS);
         

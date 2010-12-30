@@ -1,9 +1,17 @@
 package uk.co.purplemonkeys.F1Calendar;
 
+import java.util.Calendar;
+import java.util.Date;
+
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.app.Service;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.IBinder;
+import android.os.SystemClock;
 import android.preference.PreferenceManager;
 
 public class F1CalendarService extends Service implements SharedPreferences.OnSharedPreferenceChangeListener
@@ -29,6 +37,9 @@ public class F1CalendarService extends Service implements SharedPreferences.OnSh
     {
         m_preferences = PreferenceManager.getDefaultSharedPreferences(this);
         m_preferences.registerOnSharedPreferenceChangeListener(this);
+        
+        // Initialise the race calendar information
+        RaceCalendar.Initialise();
     }
 
     @Override
@@ -45,4 +56,36 @@ public class F1CalendarService extends Service implements SharedPreferences.OnSh
 	@Override
 	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
 	}
+	
+    private void scheduleAlarmEvent() {
+        long now = SystemClock.elapsedRealtime();
+        
+        final Calendar c = Calendar.getInstance();
+        Race race = RaceCalendar.getNextRace( c.getTime() );
+        if (race != null)
+        {
+        	AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        	
+        	long when = race.getInterval();
+        	
+        	if (now < when)
+        	{
+	            Intent intent = new Intent(INTENT_ALARM_ALERT);
+	            intent.setComponent(new ComponentName(this, F1CalendarService.class));
+	            PendingIntent pendingIntent = PendingIntent.getService(this, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+	
+	            manager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, when, pendingIntent);
+        	}
+        }
+        else
+        {
+        	
+        }
+    }
+    
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) 
+    {
+    	return START_STICKY;
+    }
 }

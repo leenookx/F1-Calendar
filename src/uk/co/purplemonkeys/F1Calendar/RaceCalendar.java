@@ -35,7 +35,7 @@ public class RaceCalendar
 	 * @param now The current date and time.
 	 * @return The next race to be run.
 	 */
-	public Race getNextRace(Date now)
+	public static Race getNextRace(Date now)
 	{
 		return null;
 	}

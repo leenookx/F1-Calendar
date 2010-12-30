@@ -15,4 +15,9 @@ public class Race
 		race_date = d;
 		race_flag_filename = flag_filename;
 	}
+	
+	public long getInterval()
+	{
+		return race_date.getTime();
+	}
 }
