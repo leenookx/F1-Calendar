@@ -56,6 +56,10 @@ public class F1Calendar extends AppWidgetProvider
                 new ComponentName("uk.co.purplemonkeys.F1Calendar", "BroadcastEventReceiver"),
                 					PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
                 					PackageManager.DONT_KILL_APP);
+        
+        // Initialise the race calendar information
+        RaceCalendar.Initialise();
+        
         super.onEnabled( context );
     }
     
