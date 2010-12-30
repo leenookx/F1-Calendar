@@ -3,10 +3,13 @@
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:background="@drawable/background"
     >
-<TextView  
+<TextView
+    android:id="@+id/xmas"
     android:layout_width="fill_parent" 
     android:layout_height="wrap_content" 
     android:text="@string/hello"
+    android:paddingTop="35dip" android:paddingLeft="29dip" android:textColor="#000000"
     />
 </LinearLayout>
