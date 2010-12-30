@@ -71,16 +71,18 @@ public class F1Calendar extends AppWidgetProvider
     }
     
     @Override
-    public void onDisabled(Context context) 
+    public void onDeleted(Context context, int[] appWidgetIds) 
     {
-        // When the first widget is created, stop listening for the TIMEZONE_CHANGED and
-        // TIME_CHANGED broadcasts.
-        Log.d(TAG, "onDisabled");
-        PackageManager pm = context.getPackageManager();
-        pm.setComponentEnabledSetting(
-                new ComponentName("uk.co.purplemonkeys.F1Calendar", "BroadcastEventReceiver"),
-                					PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
-                					PackageManager.DONT_KILL_APP);
-        super.onDisabled( context );
+        final int n = appWidgetIds.length;
+
+        for (int i = 0; i < n; i++) 
+        {
+            int appWidgetId = appWidgetIds[i];
+
+            Intent intent = new Intent(context, F1CalendarService.class);
+            intent.setAction(F1CalendarService.INTENT_REMOVE_WIDGET);
+            intent.putExtra(F1CalendarService.INTENT_DATA_WIDGET_ID, appWidgetId);
+            context.startService(intent);
+        }
     }
 }
