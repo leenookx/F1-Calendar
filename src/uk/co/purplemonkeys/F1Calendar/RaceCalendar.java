@@ -29,4 +29,14 @@ public class RaceCalendar
 								"bahrain.jpg",
 								"Race") );
 	}
+	
+	/**
+	 * Gets the next race based on the date passed in.
+	 * @param now The current date and time.
+	 * @return The next race to be run.
+	 */
+	public Race getNextRace(Date now)
+	{
+		return null;
+	}
 }
