@@ -21,7 +21,7 @@ import uk.co.purplemonkeys.F1Calendar.R;
 public class F1Calendar extends AppWidgetProvider
 {
     // log tag
-    private static final String TAG = "ExampleAppWidgetProvider";
+    private static final String TAG = "F1Calendar";
     
 	@Override
 	public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) 
@@ -41,9 +41,10 @@ public class F1Calendar extends AppWidgetProvider
         // be called after boot if there is a widget instance for this provider.
         PackageManager pm = context.getPackageManager();
         pm.setComponentEnabledSetting(
-                new ComponentName("uk.co.purplemonkeys", ".F1Calendar.BroadcastEventReceiver"),
+                new ComponentName("uk.co.purplemonkeys.F1Calendar", "BroadcastEventReceiver"),
                 					PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
                 					PackageManager.DONT_KILL_APP);
+        super.onEnabled(context);
     }
     
     @Override

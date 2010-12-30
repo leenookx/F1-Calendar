@@ -2,4 +2,8 @@
 <resources>
     <string name="hello">Loading widget...</string>
     <string name="app_name">F1Calendar</string>
+<string name="configure_intro">F1Calendar Configuration</string>
+<string name="save_config">Save</string>
+<string name="update_rate_hint">Refresh Rate</string>
+<string name="configure_update">Something</string>
 </resources>
