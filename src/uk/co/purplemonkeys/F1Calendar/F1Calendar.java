@@ -31,12 +31,15 @@ public class F1Calendar extends AppWidgetProvider
         {
             int appWidgetId = appWidgetIds[i];
 
-            // Create an Intent to launch ExampleActivity
+            // Create an Intent to launch the service
             Intent intent = new Intent(context, F1Calendar.class);
-            PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
-
-            // Get the layout for the App Widget and attach an on-click listener to the button
+            intent.setAction(F1CalendarService.INTENT_ADD_WIDGET);
+            intent.putExtra(F1CalendarService.INTENT_DATA_WIDGET_ID, appWidgetId);
+            context.startService(intent);
+            
+            // Get the layout for the App Widget and attach an on-click listener to it.
             RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.main);
+            PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
             views.setOnClickPendingIntent(R.id.widget, pendingIntent);
 
             // Tell the AppWidgetManager to perform an update on the current App Widget
@@ -61,7 +64,10 @@ public class F1Calendar extends AppWidgetProvider
         // Initialise the race calendar information
         RaceCalendar.Initialise();
         
-        super.onEnabled( context );
+        Intent intent = new Intent(context, F1CalendarService.class);
+        intent.setAction(F1CalendarService.INTENT_RESET_ALARMS);
+        
+        context.startService(intent);
     }
     
     @Override
