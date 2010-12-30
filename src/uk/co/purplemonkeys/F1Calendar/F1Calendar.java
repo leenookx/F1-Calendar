@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.TimerTask;
 
+import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
@@ -76,28 +77,4 @@ public class F1Calendar extends AppWidgetProvider
                 					PackageManager.DONT_KILL_APP);
         super.onDisabled( context );
     }
-	
-	private class MyTime extends TimerTask 
-	{
-		RemoteViews remoteViews;
-		AppWidgetManager appWidgetManager;
-		ComponentName thisWidget;
-
-		public MyTime(Context context, AppWidgetManager appWidgetManager) 
-		{
-			this.appWidgetManager = appWidgetManager;
-			remoteViews = new RemoteViews(context.getPackageName(), R.layout.main);
-			thisWidget = new ComponentName(context, F1Calendar.class);
-		}
-	    
-		@Override
-	    public void run() 
-		{
-			Date date1 = new Date();
-			Calendar calendar = new GregorianCalendar(2010, 11,25);
-			long days = (((calendar.getTimeInMillis()- date1.getTime())/1000))/86400;
-			remoteViews.setTextViewText(R.id.widget, "" + days);
-			appWidgetManager.updateAppWidget(thisWidget, remoteViews);
-		}
-	}
 }
