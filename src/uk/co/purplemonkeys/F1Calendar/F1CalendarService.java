@@ -1,7 +1,6 @@
 package uk.co.purplemonkeys.F1Calendar;
 
 import java.util.Calendar;
-import java.util.Date;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
